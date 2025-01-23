@@ -19,7 +19,7 @@ services:
 
   frontend:
     build:
-      context: ./app
+      context: ./frontend
       dockerfile: Dockerfile
     ports:
       - "3000:3000" # Expose Next.js app port
