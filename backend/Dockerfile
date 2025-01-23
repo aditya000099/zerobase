@@ -1,17 +1,8 @@
-# Stage 1: Build Stage
-FROM node:18-alpine AS builder
+FROM node:18-alpine
 WORKDIR /app
 COPY package*.json ./
 RUN npm install
+RUN rm -rf node_modules && npm install
 COPY . .
-RUN npm run build
-
-# Stage 2: Final Image
-FROM node:18-alpine AS final
-WORKDIR /app
-COPY --from=builder /app/.next ./.next
-COPY --from=builder /app/public ./public
-COPY package*.json ./
-COPY . .
-EXPOSE 3000
-CMD ["npm", "start"]
+EXPOSE 8080
+CMD ["node", "index.js"]
