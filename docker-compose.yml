@@ -1,0 +1,45 @@
+version: '3.8'
+services:
+  zerobase:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    ports:
+      - "3001:8080" # expose zero base application port
+    environment:
+      MARIADB_HOST: mariadb
+      MARIADB_PORT: 3306
+      MARIADB_USER: root
+      MARIADB_PASSWORD: your_mariadb_root_password
+      MARIADB_DATABASE: zerobase_db
+    networks:
+      - zerobase-network
+    depends_on:
+      - mariadb
+
+  frontend:
+    build:
+      context: ./app
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000" # Expose Next.js app port
+    networks:
+      - zerobase-network
+
+  mariadb:
+    image: mariadb:latest
+    environment:
+      MYSQL_ROOT_PASSWORD: your_mariadb_root_password
+      MYSQL_DATABASE: zerobase_db
+    ports:
+      - "3307:3306" # Expose the mariadb port for debugging from outside
+    networks:
+      - zerobase-network
+    volumes:
+      - mariadb_data:/var/lib/mysql # persistant data
+
+networks:
+  zerobase-network:
+
+volumes:
+  mariadb_data:

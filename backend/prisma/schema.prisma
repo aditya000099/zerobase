@@ -1,0 +1,29 @@
+generator client {
+  provider      = "prisma-client-js"
+  binaryTargets = ["native", "linux-musl-openssl-3.0.x"]
+}
+
+datasource db {
+  provider = "mysql"
+  url = env("DATABASE_URL")
+}
+
+model users {
+  id String @id @default(uuid())
+  email String @unique
+  password String
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+  projects projects[]
+}
+
+model projects {
+    id String @id @default(uuid())
+    project_id String @unique
+    name String
+    api_key String
+    user_id String
+    created_at DateTime @default(now())
+    updated_at DateTime @updatedAt
+    users   users @relation(fields: [user_id], references: [id])
+}
