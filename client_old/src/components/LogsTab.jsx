@@ -1,5 +1,5 @@
-import { useState, useEffect } from "react";
-import { useOutletContext } from "react-router-dom";
+import { useState, useEffect } from 'react';
+import { useOutletContext } from 'react-router-dom';
 import {
   Box,
   Table,
@@ -14,25 +14,25 @@ import {
   MenuItem,
   FormControl,
   InputLabel,
-} from "@mui/material";
-import { Refresh } from "@mui/icons-material";
-import CustomButton from "./CustomButton";
+} from '@mui/material';
+import { Refresh } from '../../node_modules/@mui/icons-material/index.d.mts';
+import CustomButton from './CustomButton';
 
 const statusColors = {
-  200: "bg-emerald-500/10 text-emerald-400 border-emerald-500/20",
-  201: "bg-emerald-500/10 text-emerald-400 border-emerald-500/20",
-  400: "bg-amber-500/10 text-amber-400 border-amber-500/20",
-  401: "bg-amber-500/10 text-amber-400 border-amber-500/20",
-  403: "bg-amber-500/10 text-amber-400 border-amber-500/20",
-  404: "bg-amber-500/10 text-amber-400 border-amber-500/20",
-  500: "bg-red-500/10 text-red-400 border-red-500/20",
+  200: 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20',
+  201: 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20',
+  400: 'bg-amber-500/10 text-amber-400 border-amber-500/20',
+  401: 'bg-amber-500/10 text-amber-400 border-amber-500/20',
+  403: 'bg-amber-500/10 text-amber-400 border-amber-500/20',
+  404: 'bg-amber-500/10 text-amber-400 border-amber-500/20',
+  500: 'bg-red-500/10 text-red-400 border-red-500/20',
 };
 
 const methodColors = {
-  GET: "bg-blue-500/10 text-blue-400 border-blue-500/20",
-  POST: "bg-emerald-500/10 text-emerald-400 border-emerald-500/20",
-  PUT: "bg-amber-500/10 text-amber-400 border-amber-500/20",
-  DELETE: "bg-red-500/10 text-red-400 border-red-500/20",
+  GET: 'bg-blue-500/10 text-blue-400 border-blue-500/20',
+  POST: 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20',
+  PUT: 'bg-amber-500/10 text-amber-400 border-amber-500/20',
+  DELETE: 'bg-red-500/10 text-red-400 border-red-500/20',
 };
 
 const LogsTab = () => {
@@ -42,9 +42,9 @@ const LogsTab = () => {
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(false);
   const [filter, setFilter] = useState({
-    status: "all",
-    endpoint: "",
-    method: "all",
+    status: 'all',
+    endpoint: '',
+    method: 'all',
   });
   const limit = 10;
 
@@ -53,13 +53,13 @@ const LogsTab = () => {
     try {
       const offset = (page - 1) * limit;
       const response = await fetch(
-        `/api/logs?projectId=${projectId}&limit=100&offset=${offset}`
+        `/api/logs?projectId=${projectId}&limit=100&offset=${offset}`,
       );
       const data = await response.json();
       // Ensure data is an array
       setLogs(Array.isArray(data) ? data : []);
     } catch (error) {
-      console.error("Error fetching logs:", error);
+      console.error('Error fetching logs:', error);
       setLogs([]); // Reset to empty array on error
     } finally {
       setLoading(false);
@@ -71,14 +71,14 @@ const LogsTab = () => {
     let filtered = [...logs];
 
     // Filter by status
-    if (filter.status !== "all") {
+    if (filter.status !== 'all') {
       filtered = filtered.filter((log) => {
         switch (filter.status) {
-          case "success":
+          case 'success':
             return log.status < 400;
-          case "error":
+          case 'error':
             return log.status >= 500;
-          case "warning":
+          case 'warning':
             return log.status >= 400 && log.status < 500;
           default:
             return true;
@@ -87,7 +87,7 @@ const LogsTab = () => {
     }
 
     // Filter by method
-    if (filter.method !== "all") {
+    if (filter.method !== 'all') {
       filtered = filtered.filter((log) => log.method === filter.method);
     }
 
@@ -95,7 +95,7 @@ const LogsTab = () => {
     if (filter.endpoint) {
       const searchTerm = filter.endpoint.toLowerCase();
       filtered = filtered.filter((log) =>
-        log.endpoint.toLowerCase().includes(searchTerm)
+        log.endpoint.toLowerCase().includes(searchTerm),
       );
     }
 
@@ -153,15 +153,15 @@ const LogsTab = () => {
             onChange={(e) => setFilter({ ...filter, status: e.target.value })}
             className="rounded-lg bg-black/20"
             sx={{
-              color: "white",
-              "& .MuiOutlinedInput-notchedOutline": {
-                borderColor: "rgba(20,252,241,0.2)",
+              color: 'white',
+              '& .MuiOutlinedInput-notchedOutline': {
+                borderColor: 'rgba(20,252,241,0.2)',
               },
-              "&:hover .MuiOutlinedInput-notchedOutline": {
-                borderColor: "rgba(20,252,241,0.4)",
+              '&:hover .MuiOutlinedInput-notchedOutline': {
+                borderColor: 'rgba(20,252,241,0.4)',
               },
-              "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
-                borderColor: "rgba(20,252,241,0.6)",
+              '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
+                borderColor: 'rgba(20,252,241,0.6)',
               },
             }}
           >
@@ -180,15 +180,15 @@ const LogsTab = () => {
             onChange={(e) => setFilter({ ...filter, method: e.target.value })}
             className="rounded-lg bg-black/20"
             sx={{
-              color: "white",
-              "& .MuiOutlinedInput-notchedOutline": {
-                borderColor: "rgba(20,252,241,0.2)",
+              color: 'white',
+              '& .MuiOutlinedInput-notchedOutline': {
+                borderColor: 'rgba(20,252,241,0.2)',
               },
-              "&:hover .MuiOutlinedInput-notchedOutline": {
-                borderColor: "rgba(20,252,241,0.4)",
+              '&:hover .MuiOutlinedInput-notchedOutline': {
+                borderColor: 'rgba(20,252,241,0.4)',
               },
-              "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
-                borderColor: "rgba(20,252,241,0.6)",
+              '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
+                borderColor: 'rgba(20,252,241,0.6)',
               },
             }}
           >
@@ -224,21 +224,21 @@ const LogsTab = () => {
         <div className="h-full overflow-auto custom-scrollbar">
           <Table
             sx={{
-              "& .MuiTableCell-root": {
-                color: "white",
-                borderColor: "rgba(20,252,241,0.1)",
+              '& .MuiTableCell-root': {
+                color: 'white',
+                borderColor: 'rgba(20,252,241,0.1)',
               },
             }}
           >
             <TableHead>
               <TableRow className="border-b border-zb-cyan/20">
                 {[
-                  "Timestamp",
-                  "Method",
-                  "Endpoint",
-                  "Status",
-                  "Message",
-                  "Metadata",
+                  'Timestamp',
+                  'Method',
+                  'Endpoint',
+                  'Status',
+                  'Message',
+                  'Metadata',
                 ].map((header) => (
                   <TableCell key={header}>
                     <span
@@ -257,7 +257,7 @@ const LogsTab = () => {
                   key={log.id}
                   className={`border-b border-zb-cyan/10 transition-colors duration-200
                     ${
-                      log.status >= 400 ? "bg-red-500/5" : "hover:bg-zb-cyan/5"
+                      log.status >= 400 ? 'bg-red-500/5' : 'hover:bg-zb-cyan/5'
                     }`}
                 >
                   <TableCell className="text-white/60 font-outfit">
@@ -311,8 +311,8 @@ const LogsTab = () => {
               className={`w-8 h-8 rounded-lg font-outfit transition-all duration-200
                 ${
                   page === i + 1
-                    ? "bg-zb-cyan/20 text-zb-cyan border border-zb-cyan/20"
-                    : "text-white/60 hover:text-white hover:bg-white/5"
+                    ? 'bg-zb-cyan/20 text-zb-cyan border border-zb-cyan/20'
+                    : 'text-white/60 hover:text-white hover:bg-white/5'
                 }`}
             >
               {i + 1}

@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
-import { useParams, useNavigate, useLocation, Outlet } from "react-router-dom";
+import { useEffect, useState } from 'react';
+import { useParams, useNavigate, useLocation, Outlet } from 'react-router-dom';
 import {
   Box,
   Container,
@@ -26,7 +26,7 @@ import {
   TableHead,
   TableRow,
   Paper,
-} from "@mui/material";
+} from '@mui/material';
 import {
   Add,
   Delete,
@@ -34,11 +34,11 @@ import {
   Person,
   Folder,
   Assessment,
-} from "@mui/icons-material";
-import AuthTab from "./AuthPage";
-import LogsTab from "./LogsTab"; // Add this import
-import CustomButton from "./CustomButton";
-import SidebarNav from "./SidebarNav";
+} from '../../node_modules/@mui/icons-material/index.d.mts';
+import AuthTab from './AuthPage';
+import LogsTab from './LogsTab'; // Add this import
+import CustomButton from './CustomButton';
+import SidebarNav from './SidebarNav';
 
 export default function ProjectPage() {
   const { projectId } = useParams();
@@ -55,7 +55,7 @@ export default function ProjectPage() {
   // const [newColumn, setNewColumn] = useState({ name: "", type: "text" });
 
   // Get active view from current path
-  const activeView = location.pathname.split("/").pop();
+  const activeView = location.pathname.split('/').pop();
 
   // Update navigation handler
   const handleViewChange = (view) => {
@@ -86,13 +86,13 @@ export default function ProjectPage() {
   useEffect(() => {
     const initializeAuth = async () => {
       try {
-        await fetch("/api/auth/init", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
+        await fetch('/api/auth/init', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ projectId }),
         });
       } catch (err) {
-        console.error("Error initializing auth:", err);
+        console.error('Error initializing auth:', err);
       }
     };
 
@@ -114,7 +114,7 @@ export default function ProjectPage() {
   if (!project) {
     return (
       <Container maxWidth="lg">
-        <Box sx={{ display: "flex", justifyContent: "center", mt: 5 }}>
+        <Box sx={{ display: 'flex', justifyContent: 'center', mt: 5 }}>
           <CircularProgress />
         </Box>
       </Container>
@@ -122,7 +122,7 @@ export default function ProjectPage() {
   }
 
   return (
-    <Box sx={{ display: "flex" }}>
+    <Box sx={{ display: 'flex' }}>
       <SidebarNav
         activeView={activeView}
         onViewChange={handleViewChange}
@@ -130,7 +130,7 @@ export default function ProjectPage() {
       />
 
       <Box component="main" className="flex-grow pl-60 bg-transparent">
-        <Outlet context={{ projectId }} />{" "}
+        <Outlet context={{ projectId }} />{' '}
         {/* Pass projectId to child routes */}
       </Box>
     </Box>
